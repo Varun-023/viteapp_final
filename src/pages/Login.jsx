@@ -34,6 +34,8 @@ function Login() {
             const result = await dispatch(loginAsync({ email: data.email, password: data.password }));
             if (loginAsync.fulfilled.match(result)) {
                 navigate("/dashboard");
+            } else if (result.payload && typeof result.payload === "string" && result.payload.includes("Account not found")) {
+                setIsLogin(false);
             }
         } else {
             const result = await dispatch(signupAsync(data));

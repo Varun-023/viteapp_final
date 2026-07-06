@@ -5,15 +5,14 @@ async function loginUser(email, password) {
 
     const response = await mockApi(usersData, 400);
 
-    const user = response.data.find(
-
-        (item) => item.email === email && item.password === password
-
-    );
-
-    if (!user) {
+    const existingEmail = response.data.find((item) => item.email === email);
+    if (!existingEmail) {
+        throw new Error("Account not found. Please complete Sign Up to continue.");
+    }
+    if (existingEmail.password !== password) {
         throw new Error("Invalid email or password");
     }
+    const user = existingEmail;
 
     const { password: pwd, ...safeUser } = user;
 
