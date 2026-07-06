@@ -7,7 +7,7 @@ async function loginUser(email, password) {
 
     const existingEmail = response.data.find((item) => item.email === email);
     if (!existingEmail) {
-        throw new Error("Account not found. Please complete Sign Up to continue.");
+        throw new Error("Invalid email or password (Account not found)");
     }
     if (existingEmail.password !== password) {
         throw new Error("Invalid email or password");
